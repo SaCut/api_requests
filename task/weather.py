@@ -1,6 +1,5 @@
-# weather curtesy of openweathermap.org
-
 import requests, json
+# weather curtesy of openweathermap.org
 
 class Weather():
     def __init__(self):
