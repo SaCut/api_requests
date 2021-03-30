@@ -1,3 +1,5 @@
+# weather curtesy of openweathermap.org
+
 import requests, json
 
 class Weather():
