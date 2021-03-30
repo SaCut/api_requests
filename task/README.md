@@ -9,7 +9,7 @@
 ### Solution
 ```python
 import requests, json
-# weather curtesy of openweathermap.org
+# weather courtesy of openweathermap.org
 
 class Weather():
     # the init method also runs our program in order
