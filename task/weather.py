@@ -1,29 +1,38 @@
-import requests
+import requests, json
 
 class Weather():
     def __init__(self):
         self._greetings()
         self.city = self._askdata()
-        self.response = self.status_code_check()
+        self.city_id = self._city_id(self.city)
+        self.response = self._status_code_check()
         self._tell_weather()
 
 
     def _greetings(self):
         print("Hello user! Welcome to the weather script!")
 
+    def _city_id(self, city_name):
+        with open("city_list.json", "r") as file:
+            for city in file:
+                if city["name"] == city_name:
+                    return city["id"]
+
     def _askdata(self):
-        city = input("Please insert the city for which you'd like to check the weather: ").lower()
+        city = input("Please insert the city for which you'd like to check the weather: ")
+        city = city.lower()
+        city = city.capitalize()
+        
         return city
 
-    def status_code_check(self):
+    def _status_code_check(self):
         try:
-            responses = requests.get('http://api.openweathermap.org/data/2.5/weather?p='+ self.city
-                +'&APPID=*************************')
+            responses = requests.get('http://api.openweathermap.org/data/2.5/weather?id='+ self.city_id
+                +'&appid=********************************')
 
             if responses.status_code == 200:
                 print("the website is up and running!\n")
 
-                print(responses.json())
                 return responses.json()
             else:
                 print("Oops, something went wrong! status code: " + str(responses.status_code))
@@ -32,8 +41,13 @@ class Weather():
             raise Exception("Oops, something went wrong. Call your neighbourhood programmer!")
 
     def _tell_weather(self):
-        weather = self.response.json()["weather"]
-        print(f"the weather in {self.city} is {weather}!")
+        for key, value in self.response.items():
+            if key == "weather":
+                for jey, jalue in value[0].items():
+                    if jey == "description":
+                        print(f"the weather in {self.city} right now is '{jalue}'!")
+
+
 
 
 
