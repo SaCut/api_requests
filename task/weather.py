@@ -5,6 +5,7 @@ class Weather():
         self._greetings()
         self.city = self._askdata()
         self.response = self.status_code_check()
+        self._tell_weather()
 
 
     def _greetings(self):
@@ -17,7 +18,7 @@ class Weather():
     def status_code_check(self):
         try:
             responses = requests.get('http://api.openweathermap.org/data/2.5/weather?p='+ self.city
-                +'&APPID=****************************8&units=metric')
+                +'&APPID=*************************')
 
             if responses.status_code == 200:
                 print("the website is up and running!\n")
@@ -29,6 +30,12 @@ class Weather():
                 raise("Shutting down")
         except:
             raise Exception("Oops, something went wrong. Call your neighbourhood programmer!")
+
+    def _tell_weather(self):
+        weather = self.response.json()["weather"]
+        print(f"the weather in {self.city} is {weather}!")
+
+
 
 if __name__=='__main__':
     obj = Weather()
