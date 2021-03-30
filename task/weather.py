@@ -20,7 +20,7 @@ class Weather():
                     return city["id"]
 
     def _askdata(self):
-        city = input("Please insert the city for which you'd like to check the weather: ")
+        city = input("Please insert the city in GB for which you'd like to check the weather: ")
         city = city.lower()
         city = city.capitalize()
         
@@ -37,7 +37,7 @@ class Weather():
                 return responses.json()
             else:
                 print("Oops, something went wrong! status code: " + str(responses.status_code))
-                raise("Shutting down")
+                raise Exception("Shutting down")
         except:
             raise Exception("Oops, something went wrong. Call your neighbourhood programmer!")
 
